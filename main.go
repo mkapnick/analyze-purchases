@@ -16,16 +16,19 @@ type Transaction struct {
 }
 
 type Transactions struct {
-	Transactions    []Transaction
-	Max             float64
-	Min             float64
-	Average         float64
-	Sum             float64
-	NumTransactions int
-	Places          []string
-	PlacesMap       map[string]int
-	Dates           []string
-	DatesMap        map[string]int
+	Transactions     []Transaction
+	Max              float64
+	Min              float64
+	Average          float64
+	Sum              float64
+	NumTransactions  int
+	Places           []string
+	PlacesMap        map[string]int
+	Dates            []string
+	DatesMap         map[string]int
+	Order            string
+	OrderedPlaces    []string
+	OrderedPurchases []float64
 }
 
 const TIME_LAYOUT = "01/01/2017"
@@ -46,6 +49,8 @@ func main() {
 	var transactions []Transaction
 	var places []string
 	var dates []string
+	// var orderedPlaces []string
+	var orderedPurchases []float64
 	min := 10000.0
 	max := -1.0
 	sum := 0.0
@@ -74,6 +79,7 @@ func main() {
 		sum = sum + amount
 		places = append(places, place)
 		dates = append(dates, date)
+		orderedPurchases = append(orderedPurchases, amount)
 
 		// use this to get more accurate count
 		// p := place[0:5]
@@ -89,6 +95,19 @@ func main() {
 
 		placesMap[place] = placesMap[place] + 1
 		datesMap[date] = datesMap[date] + 1
+
+		// sort places
+		// sort purchases
+		for i, p := range orderedPurchases {
+			if i+1 >= len(orderedPurchases) {
+				continue // do nothing
+			}
+			next := orderedPurchases[i+1]
+			if next > p {
+				orderedPurchases[i] = next
+				orderedPurchases[i+1] = p
+			}
+		}
 
 		transactions = append(transactions, Transaction{
 			Date:   dateObj,
@@ -118,11 +137,17 @@ func main() {
 	fmt.Println("==>Min: ", t.Min)
 	fmt.Println("==>Avg: ", t.Average)
 
-	fmt.Println("==>Places:<==")
-	// print other stats
-	for place, count := range t.PlacesMap {
-		fmt.Println(place, ": ", count)
+	// uncomment to print ordered purchases
+	for _, p := range orderedPurchases {
+		fmt.Println(p)
 	}
+
+	// uncomment to print where money is being spent
+	// print other stats
+	// fmt.Println("==>Places:<==")
+	// for place, count := range t.PlacesMap {
+	// fmt.Println(place, ": ", count)
+	// }
 
 	file.Close()
 }
