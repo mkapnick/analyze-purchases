@@ -63,7 +63,7 @@ func main() {
 		amount, _ := strconv.ParseFloat(parts[2], 64)
 		dateObj, _ := time.Parse(date, TIME_LAYOUT)
 
-		if amount < min {
+		if amount != 0 && amount < min {
 			min = amount
 		}
 
@@ -97,7 +97,7 @@ func main() {
 		})
 	}
 
-	avg := float64(int(sum) / len(transactions))
+	avg := float64(sum / float64(len(transactions)-1))
 	t := Transactions{
 		Transactions:    transactions,
 		Min:             min,
@@ -108,7 +108,7 @@ func main() {
 		DatesMap:        datesMap,
 		Dates:           dates,
 		Sum:             sum,
-		NumTransactions: len(transactions),
+		NumTransactions: len(transactions) - 1,
 	}
 
 	// print quick stats
