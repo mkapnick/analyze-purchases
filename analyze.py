@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-
 def analyze():
     """
     Analyze my transactions for the month of September to get
@@ -11,7 +10,7 @@ def analyze():
     """
     pass
 
-def example():
+def build():
     """
     Example using pandas
     """
@@ -28,9 +27,14 @@ def example():
 
 
     df = pd.DataFrame(data, columns=["Date", "Place", "Amount"])
+    return df
+
+def exampleLine():
+    df = build()
     print(df)
-    pass
+    df.plot.line()
+
 
 if __name__ == "__main__":
-    example()
+    exampleLine();
     #analyze()
