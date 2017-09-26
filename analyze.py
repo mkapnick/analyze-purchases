@@ -15,7 +15,18 @@ def example():
     """
     Example using pandas
     """
-    data = [["09/12/2017","B&B",14.50], ["09/13/2017", "MHM", 10.35]]
+
+    data = []
+    # loop through file line by line
+    with open('./transactions.csv') as f:
+        for line in f:
+            parts = line.split(",")
+            date = parts[0]
+            place = parts[1]
+            amount = parts[2]
+            data.append([date, place, amount])
+
+
     df = pd.DataFrame(data, columns=["Date", "Place", "Amount"])
     print(df)
     pass
