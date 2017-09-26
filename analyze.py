@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
 
 def analyze():
@@ -31,8 +32,25 @@ def build():
 
 def exampleLine():
     df = build()
-    print(df)
-    df.plot.line()
+    #print(df)
+    #dates = [pd.to_datetime(d) for d in df["Date"]]
+    #plt.scatter(dates, df["Amount"])
+    #plt.show()
+    #amounts = [d for d in df["Amount"]]
+    dates = [pd.to_datetime(d) for d in df["Date"]]
+    indexes = [d for d in range(0, len(df["Amount"]))]
+    amounts = [d for d in df["Amount"]]
+
+    # chart stuff
+    N = 5
+    colors = np.random.rand(N)
+    area = np.pi * (15 * np.random.rand(N))**2  # 0 to 15 point radii
+
+    print(dates)
+    print(amounts)
+    #plt.scatter(dates, amounts)
+    plt.scatter(indexes, amounts)
+    plt.show()
 
 
 if __name__ == "__main__":
