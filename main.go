@@ -96,16 +96,17 @@ func main() {
 		placesMap[place] = placesMap[place] + 1
 		datesMap[date] = datesMap[date] + 1
 
-		// sort places
-		// sort purchases
-		for i, p := range orderedPurchases {
-			if i+1 >= len(orderedPurchases) {
-				continue // do nothing
-			}
-			next := orderedPurchases[i+1]
-			if next > p {
-				orderedPurchases[i] = next
-				orderedPurchases[i+1] = p
+		// sort purchases in DESC order
+		for count := 0; count < len(orderedPurchases); count++ {
+			for i := 0; i < len(orderedPurchases); i++ {
+				if i+1 < len(orderedPurchases) {
+					current := orderedPurchases[i]
+					next := orderedPurchases[i+1]
+					if next > current {
+						orderedPurchases[i] = next
+						orderedPurchases[i+1] = current
+					}
+				}
 			}
 		}
 
