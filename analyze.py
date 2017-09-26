@@ -20,14 +20,14 @@ def build():
     # loop through file line by line
     with open('./transactions.csv') as f:
         for line in f:
-            parts = line.split(",")
+            parts = line.split(',')
             date = parts[0]
             place = parts[1]
             amount = parts[2]
             data.append([date, place, amount])
 
 
-    df = pd.DataFrame(data, columns=["Date", "Place", "Amount"])
+    df = pd.DataFrame(data, columns=['Date', 'Place', 'Amount'])
     return df
 
 def scatterPurchases():
@@ -36,13 +36,13 @@ def scatterPurchases():
     """
     df = build()
     #print(df)
-    #dates = [pd.to_datetime(d) for d in df["Date"]]
-    #plt.scatter(dates, df["Amount"])
+    #dates = [pd.to_datetime(d) for d in df['Date']]
+    #plt.scatter(dates, df['Amount'])
     #plt.show()
-    #amounts = [d for d in df["Amount"]]
-    dates = [pd.to_datetime(d) for d in df["Date"]]
-    indexes = [d for d in range(0, len(df["Amount"]))]
-    amounts = [d for d in df["Amount"]]
+    #amounts = [d for d in df['Amount']]
+    dates = [pd.to_datetime(d) for d in df['Date']]
+    indexes = [d for d in range(0, len(df['Amount']))]
+    amounts = [d for d in df['Amount']]
 
     # chart stuff
     N = 5
@@ -62,9 +62,9 @@ def metaInfo():
     """
     df = build()
     print(df.head())
-    print("=============")
+    print('=============')
     print(df.describe())
-    print("=============")
+    print('=============')
     print(df.dtypes)
 
 def group():
@@ -95,8 +95,23 @@ def groupTotalAndChart():
     total = places_group.sum()
     plt.show(total.plot(kind='bar'))
 
+def groupTotalAndChartAndSort():
+    """
+    Bar chart [sorted]of total purchases per place
+    """
+    df = build()
+    df['Amount'] = [float(d) for d in df['Amount']]
+    places_group = df.groupby('Place')
+    total = places_group.sum()
+    total.sort_values('Amount').head()
+    plot = total.sort_values('Amount', ascending=False).plot(kind='bar', legend=None, title='Total purchases by place')
+    plot.set_xlabel('Places')
+    plot.set_ylabel('Amount')
+    plt.show(plot)
+
 if __name__ == "__main__":
-    groupTotalAndChart()
+    groupTotalAndChartAndSort()
+    #groupTotalAndChart()
     #groupTotal()
     #group()
     #metaInfo()
