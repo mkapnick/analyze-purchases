@@ -30,7 +30,10 @@ def build():
     df = pd.DataFrame(data, columns=["Date", "Place", "Amount"])
     return df
 
-def exampleLine():
+def scatterPurchases():
+    """
+    Simple scatter chart of purchases
+    """
     df = build()
     #print(df)
     #dates = [pd.to_datetime(d) for d in df["Date"]]
@@ -53,6 +56,49 @@ def exampleLine():
     plt.show()
 
 
+def metaInfo():
+    """
+    Meta info about data frame
+    """
+    df = build()
+    print(df.head())
+    print("=============")
+    print(df.describe())
+    print("=============")
+    print(df.dtypes)
+
+def group():
+    """
+    Group by each place
+    """
+    df = build()
+    places_group = df.groupby('Place')
+    print(places_group.size())
+
+def groupTotal():
+    """
+    Show sum total from each place
+    """
+    df = build()
+    df['Amount'] = [float(d) for d in df['Amount']]
+    places_group = df.groupby('Place')
+    total = places_group.sum()
+    print(total)
+
+def groupTotalAndChart():
+    """
+    Bar chart of total purchases per place
+    """
+    df = build()
+    df['Amount'] = [float(d) for d in df['Amount']]
+    places_group = df.groupby('Place')
+    total = places_group.sum()
+    plt.show(total.plot(kind='bar'))
+
 if __name__ == "__main__":
-    exampleLine();
+    groupTotalAndChart()
+    #groupTotal()
+    #group()
+    #metaInfo()
+    #scatterPurchases();
     #analyze()
