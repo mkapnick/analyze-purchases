@@ -145,8 +145,21 @@ def groupByDatesAndPlot():
     my_plot.set_ylabel('Amount')
     plt.show(my_plot)
 
+def histoChart():
+    """
+    Histo chart to see how large each purchase is. The x axis
+    represents the amount, the y axis represents the qunatity
+    """
+    df = build()
+    df['Amount'] = [float(d) for d in df['Amount']]
+    purchase_plot = df['Amount'].hist(bins=20)
+    purchase_plot.set_xlabel('Amount')
+    purchase_plot.set_ylabel('Frequency')
+    plt.show(purchase_plot)
+
 if __name__ == "__main__":
-    groupByDatesAndPlot()
+    histoChart()
+    #groupByDatesAndPlot()
     #groupByDates()
     #groupByMerchantAndPlotAndSort()
     #groupByMerchantAndPlot()
