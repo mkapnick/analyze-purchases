@@ -22,12 +22,12 @@ def build():
         for line in f:
             parts = line.split(',')
             date = parts[0]
-            place = parts[1]
+            merchant = parts[1]
             amount = parts[2]
-            data.append([date, place, amount])
+            category = parts[3]
+            data.append([date, merchant, amount, category])
 
-
-    df = pd.DataFrame(data, columns=['Date', 'Place', 'Amount'])
+    df = pd.DataFrame(data, columns=['Date', 'Merchant', 'Amount', 'Category'])
     return df
 
 def scatterPurchases():
@@ -69,50 +69,88 @@ def metaInfo():
 
 def group():
     """
-    Group by each place
+    Group by each merchant
     """
     df = build()
-    places_group = df.groupby('Place')
-    print(places_group.size())
+    merchants_group = df.groupby('Merchant')
+    print(merchants_group.size())
 
-def groupTotal():
+def groupByMerchant():
     """
-    Show sum total from each place
+    Show sum total from each merchant
     """
     df = build()
     df['Amount'] = [float(d) for d in df['Amount']]
-    places_group = df.groupby('Place')
-    total = places_group.sum()
+    merchants_group = df.groupby('Merchant')
+    total = merchants_group.sum()
     print(total)
 
-def groupTotalAndChart():
+def groupByMerchantAndPlot():
     """
-    Bar chart of total purchases per place
+    Bar chart of total purchases per merchant
     """
     df = build()
     df['Amount'] = [float(d) for d in df['Amount']]
-    places_group = df.groupby('Place')
-    total = places_group.sum()
+    merchants_group = df.groupby('Merchant')
+    total = merchants_group.sum()
     plt.show(total.plot(kind='bar'))
 
-def groupTotalAndChartAndSort():
+def groupByMerchantAndPlotAndSort():
     """
-    Bar chart [sorted]of total purchases per place
+    Bar chart [sorted]of total purchases per merchant
     """
     df = build()
     df['Amount'] = [float(d) for d in df['Amount']]
-    places_group = df.groupby('Place')
-    total = places_group.sum()
+    merchants_group = df.groupby('Merchant')
+    total = merchants_group.sum()
     total.sort_values('Amount').head()
-    plot = total.sort_values('Amount', ascending=False).plot(kind='bar', legend=None, title='Total purchases by place')
-    plot.set_xlabel('Places')
+    plot = total.sort_values('Amount', ascending=False).plot(kind='bar', legend=None, title='Total purchases by merchant')
+    plot.set_xlabel('Merchants')
     plot.set_ylabel('Amount')
     plt.show(plot)
 
+def groupByMerchants():
+    """
+    Group purchases by frequency
+    """
+    df = build()
+    new_df = df[['Merchant', 'Amount']] #create a new df
+    merchant_group = new_df.groupby(['Merchant']).count()
+    print(merchant_group)
+
+def groupByDates():
+    """
+    Break down purchases by dates
+    """
+    df = build()
+    category_group = df.groupby(['Merchant', 'Date', 'Amount']).sum()
+    print(category_group)
+
+def groupByDatesAndPlot():
+    """
+    Break down purchases by dates and plot in a stacked bar chart. This
+    chart will show you the `size` of each purchase made at a merchant
+    """
+    df = build()
+    # making a new df
+    new_df = df[['Merchant', 'Date', 'Amount']]
+    new_df['Amount'] = [float(a) for a in df['Amount']]
+
+    # group by merchant and date, take the sum of the amount
+    merchant_group = new_df.groupby(['Merchant', 'Date']).sum()
+
+    #print(merchant_group)
+    my_plot = merchant_group.unstack().plot(kind='bar', stacked=True,title='Total purchases')
+    my_plot.set_xlabel('Merchants')
+    my_plot.set_ylabel('Amount')
+    plt.show(my_plot)
+
 if __name__ == "__main__":
-    groupTotalAndChartAndSort()
-    #groupTotalAndChart()
-    #groupTotal()
+    groupByDatesAndPlot()
+    #groupByDates()
+    #groupByMerchantAndPlotAndSort()
+    #groupByMerchantAndPlot()
+    #groupByMerchant()
     #group()
     #metaInfo()
     #scatterPurchases();
