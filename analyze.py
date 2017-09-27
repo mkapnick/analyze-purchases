@@ -157,8 +157,30 @@ def histoChart():
     purchase_plot.set_ylabel('Frequency')
     plt.show(purchase_plot)
 
+def chartOverTime():
+    """
+    Chart showing purchase behavior over time
+    """
+    df = build()
+
+    # update date
+    df['Date'] = [pd.to_datetime(d) for d in df['Date']]
+    df['Amount'] = [float(d) for d in df['Amount']]
+
+    # pull out the data we need
+    purchase_patterns = df[['Amount', 'Date']]
+
+    # set date as the index
+    purchase_patterns = purchase_patterns.set_index('Date')
+
+    # plot on the Day `D`, can use `M` for month and others as well
+    purchase_plot = purchase_patterns.resample('D', how=sum).plot(title='Test')
+    plt.show(purchase_plot)
+
+
 if __name__ == "__main__":
-    histoChart()
+    chartOverTime()
+    #histoChart()
     #groupByDatesAndPlot()
     #groupByDates()
     #groupByMerchantAndPlotAndSort()
