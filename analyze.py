@@ -2,6 +2,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Formatting of the transactions csv file should look like:
+# Date,Place,Amount, Category
+# Ex: 09/25/2017,Market Street,24.30, Dining
+# For the charts, you probably want to adjust the bottom so you can
+# see the merchant names
+
 def analyze():
     """
     Analyze my transactions for the month of September to get
@@ -180,12 +186,12 @@ def chartOverTime():
 
 if __name__ == "__main__":
     chartOverTime()
-    #histoChart()
-    #groupByDatesAndPlot()
-    #groupByDates()
-    #groupByMerchantAndPlotAndSort()
-    #groupByMerchantAndPlot()
-    #groupByMerchant()
+    histoChart()
+    groupByDatesAndPlot()
+    groupByDates()
+    groupByMerchantAndPlotAndSort()
+    groupByMerchantAndPlot()
+    groupByMerchant()
     #group()
     #metaInfo()
     #scatterPurchases();
