@@ -37,6 +37,7 @@ func main() {
 
 	// open the file for read purposes
 	file, err := os.OpenFile("./transactions.csv", os.O_RDONLY, 0600)
+	defer file.Close()
 	if err != nil {
 		fmt.Println("Error opening file")
 		os.Exit(0)
@@ -152,6 +153,4 @@ func main() {
 	// for place, count := range t.PlacesMap {
 	// fmt.Println(place, ": ", count)
 	// }
-
-	file.Close()
 }
