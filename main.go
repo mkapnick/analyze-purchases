@@ -140,11 +140,11 @@ func main() {
 	fmt.Println("")
 
 	// print quick stats
-	fmt.Println("==>Num: ", t.NumTransactions)
-	fmt.Println("==>Sum: ", t.Sum)
-	fmt.Println("==>Max: ", t.Max)
-	fmt.Println("==>Min: ", t.Min)
-	fmt.Println("==>Avg: ", t.Average)
+	fmt.Println("==> Num: ", t.NumTransactions)
+	fmt.Println("==> Sum: ", t.Sum)
+	fmt.Println("==> Max: ", t.Max)
+	fmt.Println("==> Min: ", t.Min)
+	fmt.Println("==> Avg: ", t.Average)
 
 	// uncomment to print where money is being spent
 	// print other stats
