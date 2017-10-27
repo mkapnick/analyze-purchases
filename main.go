@@ -131,17 +131,20 @@ func main() {
 		NumTransactions: len(transactions) - 1,
 	}
 
+	// uncomment to print ordered purchases
+	for _, p := range orderedPurchases {
+		fmt.Println(p)
+	}
+
+	// new line
+	fmt.Println("")
+
 	// print quick stats
 	fmt.Println("==>Num: ", t.NumTransactions)
 	fmt.Println("==>Sum: ", t.Sum)
 	fmt.Println("==>Max: ", t.Max)
 	fmt.Println("==>Min: ", t.Min)
 	fmt.Println("==>Avg: ", t.Average)
-
-	// uncomment to print ordered purchases
-	for _, p := range orderedPurchases {
-		fmt.Println(p)
-	}
 
 	// uncomment to print where money is being spent
 	// print other stats
